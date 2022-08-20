@@ -1,4 +1,4 @@
-package task2_1;
+package netology.task2_1;
 
 public enum Sex {
     MAN,

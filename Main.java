@@ -1,4 +1,4 @@
-package task2_1;
+package netology.task2_1;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,17 +21,15 @@ public class Main {
         int averageAge = numberAverageAge(persons);
 
         List<String> conscript = listConscriptSurname(persons);
-        List<Person> workableWoman = listWorkableWoman(persons);
-        List<Person> workableMan = listWorkableMan(persons);
+        List<Person> workable = listWorkable(persons);
 
         System.out.println("minors: " + minors);
         System.out.println("averageAge: " + averageAge);
+
         System.out.println("***conscript***");
         conscript.forEach(System.out::println);
-        System.out.println("***workableWoman***");
-        workableWoman.forEach(System.out::println);
-        System.out.println("***workableMan***");
-        workableMan.forEach(System.out::println);
+        System.out.println("***workable***");
+        workable.forEach(System.out::println);
     }
 
     static void personsAdd(List<Person> persons, List<String> names, List<String> families, int number) {
@@ -60,21 +58,14 @@ public class Main {
                 .map(Person::getSurname).collect(Collectors.toList());
     }
 
-    private static List<Person> listWorkableWoman(List<Person> persons) {
+    private static List<Person> listWorkable(List<Person> persons) {
         return persons.stream()
                 .filter(p -> p.getEducation() == Education.HIGHER)
-                .filter(p -> p.getSex() == Sex.WOMAN)
-                .filter(p -> p.getAge() >= 18 && p.getAge() <= 60)
+                .filter(p->p.getAge() >= 18)
+                .filter(p-> p.getSex() == Sex.WOMAN && p.getAge() <55
+                        || (p.getSex() == Sex.MAN && p.getAge() < 60))
                 .sorted(Comparator.comparing(Person::getName))
                 .collect(Collectors.toList());
     }
 
-    private static List<Person> listWorkableMan(List<Person> persons) {
-        return persons.stream()
-                .filter(p -> p.getEducation() == Education.HIGHER)
-                .filter(p -> p.getSex() == Sex.MAN)
-                .filter(p -> p.getAge() >= 18 && p.getAge() <= 65)
-                .sorted(Comparator.comparing(Person::getName))
-                .collect(Collectors.toList());
-    }
 }
